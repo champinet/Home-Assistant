@@ -1,0 +1,60 @@
+homeassistant:
+  customize: !include customize.yaml
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+http:
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+
+#discovery:
+#  ignore:
+#    - igd
+
+# Text to speech
+tts:
+  - platform: google_translate
+    language: 'es'
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+sensor: !include sensors.yaml
+input_select: !include input_select.yaml
+timer: !include timer.yaml
+yeelight: !include yeelight.yaml
+alexa: !include alexa.yaml
+
+# Purga la base de datos de Home Assistant
+recorder:
+  auto_purge: true
+  purge_keep_days: 15
+
+
+# Integracion enchufes TP-LINK HS110
+# Lavadora, Secadora, CPD1
+tplink:
+  switch:
+    - host: 192.168.30.240
+    - host: 192.168.30.228
+    - host: 192.168.30.214  
+
+
+telegram_bot:
+  platform: polling
+  api_key: !secret TOKEN_DEL_BOT
+  allowed_chat_ids:
+    - !secret ID_CHAT
+
+notify:
+- name: telegram
+  platform: telegram
+  api_key: !secret TOKEN_DEL_BOT
+  chat_id: !secret ID_CHAT
+

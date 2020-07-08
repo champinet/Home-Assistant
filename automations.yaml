@@ -1,0 +1,305 @@
+- id: '1581444944823'
+  alias: Encender luz salon al atardecer
+  description: Encender luz salon al atardecer
+  trigger:
+  - event: sunset
+    offset: -00:30:00
+    platform: sun
+  condition:
+  - condition: state
+    entity_id: light.lampara_salon
+    state: 'off'
+  action:
+  - data:
+      brightness: 69
+      color_temp: 383
+    entity_id: light.lampara_salon
+    service: light.turn_on
+- id: '1581791310040'
+  alias: Lavadora Modo Espera
+  description: Lavadora Modo Espera
+  trigger:
+  - below: '5'
+    entity_id: sensor.lavadora_amps
+    for: 0:01:00
+    platform: numeric_state
+  condition:
+  - condition: state
+    entity_id: input_select.lavadora_status
+    state: Lavando
+  - condition: state
+    entity_id: device_tracker.redminote8pro_redmi
+    state: not_home
+  - condition: state
+    entity_id: device_tracker.pocophonef1_pocophon
+    state: not_home
+  action:
+  - data:
+      option: Espera
+    entity_id: input_select.lavadora_status
+    service: input_select.select_option
+  - data:
+      message: La lavadora ya terminó, pasara a modo espera, cuando llegues a casa
+        te lo recordare
+    service: notify.telegram
+- id: '1581792345449'
+  alias: Lavadora Inicio
+  description: Lavadora Inicio
+  trigger:
+  - above: '4'
+    entity_id: sensor.lavadora_watts
+    for: 00:01:00
+    platform: numeric_state
+  action:
+  - data:
+      option: Lavando
+    entity_id: input_select.lavadora_status
+    service: input_select.select_option
+  - data:
+      data:
+        type: tts
+      message: Lavadora en marcha, en cuanto termine, te aviso para tender la ropa
+      target:
+      - Salon
+    service: notify.alexa_media_echo_dot_de_jtorrents
+- id: '1581796322157'
+  alias: Lavadora Recordatorio
+  description: Lavadora Recordatorio
+  trigger:
+  - entity_id: input_select.lavadora_status
+    platform: state
+    to: Finalizado
+  - event_data:
+      entity_id: timer.fin_lavadora
+    event_type: timer.finished
+    platform: event
+  condition:
+  - condition: state
+    entity_id: device_tracker.pocophonef1_pocophon
+    state: home
+  - condition: state
+    entity_id: device_tracker.redminote8pro_redmi
+    state: home
+  action:
+  - data:
+      entity_id: timer.fin_lavadora
+    service: timer.start
+  - data:
+      data:
+        type: tts
+      message: La lavadora ya terminó, debes tender la ropa o poner la secadora, te
+        lo recordaré en 15 minutos, a no ser que me avises de que ya lo has hecho
+      target:
+      - Salon
+    service: notify.alexa_media_echo_dot_de_jtorrents
+- id: '1581797230521'
+  alias: Lavadora Finalizado
+  description: Lavadora Finalizado
+  trigger:
+  - below: '5'
+    entity_id: sensor.lavadora_watts
+    for: 0:03:00
+    platform: numeric_state
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: device_tracker.pocophonef1_pocophon
+      state: home
+    - condition: state
+      entity_id: device_tracker.redminote8pro_redmi
+      state: home
+  - condition: state
+    entity_id: input_select.lavadora_status
+    state: Lavando
+  action:
+  - data:
+      option: Finalizado
+    entity_id: input_select.lavadora_status
+    service: input_select.select_option
+- id: '1581797687140'
+  alias: Lavadora Fin Espera
+  description: Lavadora Fin Espera
+  trigger:
+  - entity_id: device_tracker.pocophonef1_pocophon
+    from: not_home
+    platform: state
+    to: home
+  - entity_id: device_tracker.redminote8pro_redmi
+    from: not_home
+    platform: state
+    to: home
+  condition:
+  - condition: state
+    entity_id: input_select.lavadora_status
+    state: Espera
+  action:
+  - data:
+      option: Finalizado
+    entity_id: input_select.lavadora_status
+    service: input_select.select_option
+- id: '1581797979962'
+  alias: Lavadora Recoger Ropa
+  description: Lavadora Recoger Ropa
+  trigger:
+  - entity_id: script.1581793329413
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: device_tracker.pocophonef1_pocophon
+    state: home
+  - condition: state
+    entity_id: device_tracker.redminote8pro_redmi
+    state: home
+  action:
+  - data:
+      data:
+        type: tts
+      message: Acuérdate de recogér la ropa y poner la secadora
+      target:
+      - Salon
+    service: notify.alexa_media_echo_dot_de_jtorrents
+- id: '1582542646502'
+  alias: Secadora Fin Espera
+  description: Secadora Fin Espera
+  trigger:
+  - entity_id: device_tracker.pocophonef1_pocophon
+    from: not_home
+    platform: state
+    to: home
+  - entity_id: device_tracker.redminote8pro_redmi
+    from: not_home
+    platform: state
+    to: home
+  condition:
+  - condition: state
+    entity_id: input_select.secadora_status
+    state: Espera
+  action:
+  - data:
+      option: Finalizado
+    entity_id: input_select.secadora_status
+    service: input_select.select_option
+- id: '1582542965503'
+  alias: Secadora Finalizado
+  description: Secadora Finalizado
+  trigger:
+  - below: '50'
+    entity_id: sensor.secadora_watts
+    for: 0:03:00
+    platform: numeric_state
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: device_tracker.pocophonef1_pocophon
+      state: home
+    - condition: state
+      entity_id: device_tracker.redminote8pro_redmi
+      state: home
+  - condition: state
+    entity_id: input_select.secadora_status
+    state: Secando
+  action:
+  - data:
+      option: Finalizado
+    entity_id: input_select.secadora_status
+    service: input_select.select_option
+- id: '1582543453114'
+  alias: Secadora Inicio
+  description: Secadora Inicio
+  trigger:
+  - above: '450'
+    entity_id: sensor.secadora_watts
+    platform: numeric_state
+  action:
+  - data:
+      option: Secando
+    entity_id: input_select.secadora_status
+    service: input_select.select_option
+  - data:
+      data:
+        type: tts
+      message: Secadora en marcha, en cuanto termine, te aviso para recoger la ropa
+      target:
+      - Salon
+    service: notify.alexa_media_echo_dot_de_jtorrents
+- id: '1582543924757'
+  alias: Secadora Modo Espera
+  description: Secadora Modo Espera
+  trigger:
+  - below: '50'
+    entity_id: sensor.secadora_watts
+    for: 0:03:00
+    platform: numeric_state
+  condition:
+  - condition: state
+    entity_id: input_select.secadora_status
+    state: Secando
+  - condition: state
+    entity_id: device_tracker.pocophonef1_pocophon
+    state: not_home
+  - condition: state
+    entity_id: device_tracker.redminote8pro_redmi
+    state: not_home
+  action:
+  - data:
+      option: Espera
+    entity_id: input_select.secadora_status
+    service: input_select.select_option
+  - data:
+      message: La secadora ya terminó, pasara a modo espera, cuando llegues a casa
+        te lo recordare
+    service: notify.telegram
+- id: '1582544449869'
+  alias: Secadora Recoger Ropa
+  description: Secadora Recoger Ropa
+  trigger:
+  - entity_id: script.1582542140123
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: device_tracker.pocophonef1_pocophon
+    state: home
+  - condition: state
+    entity_id: device_tracker.redminote8pro_redmi
+    state: home
+  action:
+  - data:
+      data:
+        type: tts
+      message: La secadora ha terminado, acuérdate de recogér la ropa
+      target:
+      - Salon
+    service: notify.alexa_media_echo_dot_de_jtorrents
+- id: '1582544871688'
+  alias: Secadora Recordatorio
+  description: Secadora Recordatorio
+  trigger:
+  - entity_id: input_select.secadora_status
+    platform: state
+    to: Finalizado
+  - event_data:
+      entity_id: timer.fin_secadora
+    event_type: timer.finished
+    platform: event
+  condition:
+  - condition: state
+    entity_id: device_tracker.pocophonef1_pocophon
+    state: home
+  - condition: state
+    entity_id: device_tracker.redminote8pro_redmi
+    state: home
+  action:
+  - entity_id: timer.fin_secadora
+    service: timer.start
+  - data:
+      data:
+        type: tts
+      message: La secadora ya terminó, debes recoger la ropa, te lo recordaré en 15
+        minutos, a no ser que me avises de que ya lo has hecho
+      target:
+      - Salon
+    service: notify.alexa_media_echo_dot_de_jtorrents

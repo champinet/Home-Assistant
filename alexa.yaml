@@ -1,0 +1,18 @@
+smart_home:
+  locale: es-ES
+  endpoint: https://api.eu.amazonalexa.com/v3/events
+  client_id: !secret amazon_client_id
+  client_secret: !secret amazon_client_secret
+  filter:
+    include_domains:
+      - switch
+      - ligth
+    include_entities:
+      - light.lampara_salon
+  entity_config:
+    light.lampara_salon:
+      name: Lampara salon
+      display_categories: LIGHT
+    switch.tasmota_tele:
+      name: Tele
+      display_categories: SWITCH

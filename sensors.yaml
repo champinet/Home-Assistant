@@ -1,0 +1,68 @@
+  - platform: template
+    sensors:
+      lavadora_amps:
+        friendly_name_template: "{{ states.switch.lavadora.name}} Current"
+        value_template: '{{ states.switch.lavadora.attributes["current_a"] | float }}'
+        unit_of_measurement: 'A'
+      lavadora_watts:
+        friendly_name_template: "{{ states.switch.lavadora.name}} Current Consumption"
+        value_template: '{{ states.switch.lavadora.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      lavadora_total_kwh:
+        friendly_name_template: "{{ states.switch.lavadora.name}} Total Consumption"
+        value_template: '{{ states.switch.lavadora.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      lavadora_volts:
+        friendly_name_template: "{{ states.switch.lavadora.name}} Voltage"
+        value_template: '{{ states.switch.lavadora.attributes["voltage"] | float }}'
+        unit_of_measurement: 'V'
+      lavadora_today_kwh:
+        friendly_name_template: "{{ states.switch.lavadora.name}} Today's Consumption"
+        value_template: '{{ states.switch.lavadora.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+
+  - platform: template
+    sensors:
+      secadora_amps:
+        friendly_name_template: "{{ states.switch.secadora.name}} Current"
+        value_template: '{{ states.switch.secadora.attributes["current_a"] | float }}'
+        unit_of_measurement: 'A'
+      secadora_watts:
+        friendly_name_template: "{{ states.switch.secadora.name}} Current Consumption"
+        value_template: '{{ states.switch.secadora.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      secadora_total_kwh:
+        friendly_name_template: "{{ states.switch.secadora.name}} Total Consumption"
+        value_template: '{{ states.switch.secadora.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      secadora_volts:
+        friendly_name_template: "{{ states.switch.secadora.name}} Voltage"
+        value_template: '{{ states.switch.secadora.attributes["voltage"] | float }}'
+        unit_of_measurement: 'V'
+      secadora_today_kwh:
+        friendly_name_template: "{{ states.switch.secadora.name}} Today's Consumption"
+        value_template: '{{ states.switch.secadora.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+  
+  - platform: template
+    sensors:
+      cpd1_amps:
+        friendly_name_template: "{{ states.switch.cpd1.name}} Current"
+        value_template: '{{ states.switch.cpd1.attributes["current_a"] | float }}'
+        unit_of_measurement: 'A'
+      cpd1_watts:
+        friendly_name_template: "{{ states.switch.cpd1.name}} Current Consumption"
+        value_template: '{{ states.switch.cpd1.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      cpd1_total_kwh:
+        friendly_name_template: "{{ states.switch.cpd1.name}} Total Consumption"
+        value_template: '{{ states.switch.cpd1.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      cpd1_volts:
+        friendly_name_template: "{{ states.switch.cpd1.name}} Voltage"
+        value_template: '{{ states.switch.cpd1.attributes["voltage"] | float }}'
+        unit_of_measurement: 'V'
+      cpd1_today_kwh:
+        friendly_name_template: "{{ states.switch.cpd1.name}} Today's Consumption"
+        value_template: '{{ states.switch.cpd1.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'

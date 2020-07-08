@@ -1,0 +1,38 @@
+'1581793329413':
+  alias: Fin Lavadora
+  sequence:
+  - data:
+      entity_id: input_select.lavadora_status
+      option: Apagado
+    service: input_select.select_option
+  - data:
+      entity_id: timer.fin_lavadora
+    service: timer.cancel
+  - delay: 00:00:06
+  - data:
+      data:
+        type: tts
+      message: Perfecto, ya no te recordaré mas que tiendas, pero si que recójas la
+        ropa
+      target:
+      - Salon
+    service: notify.alexa_media_echo_dot_de_jtorrents
+'1582542140123':
+  alias: Fin Secadora
+  sequence:
+  - data:
+      option: Apagado
+    entity_id: input_select.secadora_status
+    service: input_select.select_option
+  - data: {}
+    entity_id: timer.fin_secadora
+    service: timer.cancel
+  - delay: 00:00:06
+  - data:
+      data:
+        type: tts
+      message: Perfecto, ya no te recordaré mas que tiendas, pero si que recójas la
+        ropa
+      target:
+      - Salon
+    service: notify.alexa_media_echo_dot_de_jtorrents

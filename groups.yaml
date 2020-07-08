@@ -1,0 +1,27 @@
+lavadora:
+   name: Lavadora
+   entities:
+     - sensor.lavadora_amps
+     - sensor.lavadora_volts
+     - sensor.lavadora_watts
+     - sensor.lavadora_total_kwh
+     - timer.fin_lavadora
+     - input_select.lavadora_status
+
+secadora:
+   name: Secadora
+   entities:
+     - sensor.secadora_amps
+     - sensor.secadora_volts
+     - sensor.secadora_watts
+     - sensor.secadora_total_kwh
+     - timer.fin_secadora
+     - input_select.secadora_status
+
+cpd1:
+   name: cpd1
+   entities:
+     - sensor.cpd1_amps
+     - sensor.cpd1_volts
+     - sensor.cpd1_watts
+     - sensor.cpd1_total_kwh

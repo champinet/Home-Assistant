@@ -1,0 +1,7 @@
+# Timer Lavadora
+  fin_lavadora:
+    duration: '00:15:00'
+  
+# Timer Secadora  
+  fin_secadora:
+    duration: '00:15:00'

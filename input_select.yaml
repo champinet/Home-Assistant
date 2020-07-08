@@ -1,0 +1,30 @@
+# Modo Lavadora
+  lavadora_status:
+    name: Estado de Lavadora
+    options:
+     - "Apagado"
+     - "Lavando"
+     - "Espera"
+     - "Finalizado"
+    initial: "Apagado"
+    icon: mdi:washing-machine
+
+# Modo Secadora
+  secadora_status:
+    name: Estado de Secadora
+    options:
+     - "Apagado"
+     - "Secando"
+     - "Espera"
+     - "Finalizado"
+    initial: "Apagado"
+    icon: mdi:washing-machine
+
+# Modo Vacaciones
+  vacaciones_status:
+    name: Estado Vacaciones
+    options:
+     - "Vacaciones"
+     - "Rutina"
+    initial: "Rutina"
+    icon: mdi:party-popper

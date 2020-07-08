@@ -1,0 +1,8 @@
+devices:
+  192.168.30.206:
+    name: Lampara salon
+    model: color1
+    transition: 1000
+    use_music_mode: false
+    save_on_change: true
+
